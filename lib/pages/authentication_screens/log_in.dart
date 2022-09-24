@@ -4,6 +4,7 @@ import 'package:slide_to_act/slide_to_act.dart';
 import 'package:untitled3/layout/main_layout.dart';
 import 'package:untitled3/pages/authentication_screens/sign_up.dart';
 import '../../api/api.dart';
+import '../../models/user.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -17,26 +18,18 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  static TextEditingController emailController = TextEditingController();
-  static TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
-  register() async{
-    var data = {
-      "email": "${emailController.text}",
-      "password": "${passwordController.text}",
-    };
+  login() async{
 
-    var res = await Api.login(data);
-    var body = jsonDecode(res.body);
+    LoginModel res = LoginModel.fromjson(await Api.post_login_data(emailController.text, passwordController.text));
+    print( res.code);
 
-    print('the email is ${emailController.text}');
-    print('the password is ${passwordController.text}');
-    print(body['code']);
-
-    if(body['code']== 200){
+    if(res.code == 200){
       Navigator.push(context, MaterialPageRoute(builder: (context) => const MainLayout()));
 
-    }else if(body['code']== 400){
+    }else if(res.code == 400){
       print('wrong password');
 
     }else{
@@ -155,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                               sliderButtonIcon: Icon(Icons.login_rounded,color: Colors.white.withOpacity(.9),),
                               sliderButtonIconSize: 100,
                               onSubmit:() {
-                                register();
+                                login();
                               },
                             ),
                           ),

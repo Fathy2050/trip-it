@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:untitled3/pages/authentication_screens/sign_up.dart';
 
+import '../../api/api.dart';
 import '../../layout/main_layout.dart';
+import '../../models/user.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -13,6 +15,28 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
 
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+
+  register() async {
+
+    LoginModel res = LoginModel.fromjson(await Api.post_signup_data(nameController.text,'mo',emailController.text,passwordController.text,ageController.text,'male' ));
+    print(res.code);
+
+    if(res.code == 200){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const MainLayout()));
+
+    }else if(res.code == 401){
+    print('wrong password');
+
+    }else{
+    print('please enter your email and password');
+    }
+
+  }
+
   bool isTermsSelected = false;
 
   @override
@@ -21,11 +45,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
     return SafeArea(
       child: Scaffold(body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         child: Container(
           width: size.width,
           height: size.height,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
               Color(0xffF35454),
               Color(0xffDB2A7C),
@@ -77,7 +101,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   Positioned(
                     top: 36,
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
                       width: size.width * .85,
                       height: size.height * .5,
                       decoration: BoxDecoration(
@@ -88,32 +112,36 @@ class _SignUpPageState extends State<SignUpPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
 
-                          SizedBox(height: 20,),
-                          Text("Sign Up",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 25,color: Color(0xff111111)),),
-                          SizedBox(height: 10,),
+                          const SizedBox(height: 20,),
+                          const Text("Sign Up",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 25,color: Color(0xff111111)),),
+                          const SizedBox(height: 10,),
 
                           TextField(
-                            style: TextStyle(fontSize: 13),
-                            decoration: InputDecoration(hintText: "Name"),
+                            controller: nameController,
+                            style: const TextStyle(fontSize: 13),
+                            decoration: const InputDecoration(hintText: "Name"),
                           ),
-                          SizedBox(height: 10,),
+                          const SizedBox(height: 10,),
                           TextField(
-                            style: TextStyle(fontSize: 13),
-                            decoration: InputDecoration(hintText: "Email"),
+                            controller: emailController,
+                            style: const TextStyle(fontSize: 13),
+                            decoration: const InputDecoration(hintText: "Email"),
                           ),
-                          SizedBox(height: 10,),
+                          const SizedBox(height: 10,),
                           TextField(
+                            controller: passwordController,
                             obscureText: true,
-                            style: TextStyle(fontSize: 13),
-                            decoration: InputDecoration(hintText: "Password"),
+                            style: const TextStyle(fontSize: 13),
+                            decoration: const InputDecoration(hintText: "Password"),
                           ),
-                          SizedBox(height: 10,),
+                          const SizedBox(height: 10,),
 
                           TextField(
-                            style: TextStyle(fontSize: 12),
-                            decoration: InputDecoration(hintText: "Phone Number"),
+                            controller: ageController,
+                            style: const TextStyle(fontSize: 12),
+                            decoration: const InputDecoration(hintText: "age"),
                           ),
-                          SizedBox(height: 15,),
+                          const SizedBox(height: 15,),
 
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -131,16 +159,16 @@ class _SignUpPageState extends State<SignUpPage> {
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(color: Color(0xffF04E59)),
-                                    color: (isTermsSelected == true)? Color(0xffF04E59):Colors.white,
+                                    border: Border.all(color: const Color(0xffF04E59)),
+                                    color: (isTermsSelected == true)? const Color(0xffF04E59):Colors.white,
                                   ),
                                   child: Center(
-                                    child: Icon(Icons.done,size: 12,color: (isTermsSelected == true)? Colors.white:Color(0xffF04E59),),),
+                                    child: Icon(Icons.done,size: 12,color: (isTermsSelected == true)? Colors.white:const Color(0xffF04E59),),),
                                 ),
                               ),
-                              SizedBox(width: 10,),
-                              Text("I agree the",style: TextStyle(color: Colors.black,fontSize: 12.5,fontWeight: FontWeight.w500),),
-                              Text(" Terms & Conditions ",style: TextStyle(color: Color(0xffF04E59),fontSize: 12.5,fontWeight: FontWeight.w400),),
+                              const SizedBox(width: 10,),
+                              const Text("I agree the",style: TextStyle(color: Colors.black,fontSize: 12.5,fontWeight: FontWeight.w500),),
+                              const Text(" Terms & Conditions ",style: TextStyle(color: Color(0xffF04E59),fontSize: 12.5,fontWeight: FontWeight.w400),),
 
                             ],),
 
@@ -179,15 +207,15 @@ class _SignUpPageState extends State<SignUpPage> {
                 alignment: Alignment.center,
                 height: 100,
                 child: SlideAction(
-                  outerColor: Color(0xffF04E59),
+                  outerColor: const Color(0xffF04E59),
                   innerColor: Colors.redAccent.shade100,
                   elevation: 0,
                   text: 'Sign In',
-                  textStyle: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w300),
+                  textStyle: const TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w300),
                   sliderButtonIcon: Icon(Icons.login_rounded,color: Colors.white.withOpacity(.9),),
                   sliderButtonIconSize: 100,
                   onSubmit:() {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MainLayout()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const MainLayout()));
                   },
                 ),
               ),
@@ -222,20 +250,20 @@ class _SignUpPageState extends State<SignUpPage> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 25,),
+                    const SizedBox(height: 25,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Already have an account?  ",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w300),),
+                        const Text("Already have an account?  ",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w300),),
 
                         GestureDetector(
                             onTap: (){
                               Navigator.pop(context);
                             },
-                            child: Text("Login",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w400),)),
+                            child: const Text("Login",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w400),)),
 
                       ],),
-                    SizedBox(height: 80,),
+                    const SizedBox(height: 80,),
 
                   ],))
           ],),),
