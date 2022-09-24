@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:slide_to_act/slide_to_act.dart';
-import 'package:untitled3/pages/authentication_screens/sign_up.dart';
-
 import '../../api/api.dart';
 import '../../layout/main_layout.dart';
 import '../../models/login_model.dart';
-import '../../models/user_model.dart';
 import '../../widgets/snake_bar.dart';
+//1
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
