@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled3/models/user_data_store.dart';
 
 import '../../widgets/setting_card.dart';
 
@@ -31,17 +32,17 @@ class _ProfilePageState extends State<ProfilePage> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.grey,
-                        image: DecorationImage(image: AssetImage('')),
+                        image: DecorationImage(image: NetworkImage(FromUserData.Image),fit: BoxFit.cover),
                       ),
                     ),
                     SizedBox(height: 10,),
 
 
-                    Text('Fathy',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 24,color: Colors.black54),),
+                    Text(FromUserData.Name,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 24,color: Colors.black54),),
                     SizedBox(height: 6,),
 
 
-                    Text('Mohamed_Fathy@gmail.com',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18,color: Colors.grey),),
+                    Text(FromUserData.Email,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18,color: Colors.grey),),
                     //SizedBox(height: 30,),
 
                   ],

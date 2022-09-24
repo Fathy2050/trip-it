@@ -1,10 +1,11 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:untitled3/layout/main_layout.dart';
+import 'package:untitled3/models/user_data_store.dart';
 import 'package:untitled3/pages/authentication_screens/sign_up.dart';
+import 'package:untitled3/widgets/snake_bar.dart';
 import '../../api/api.dart';
-import '../../models/user.dart';
+import '../../models/login_model.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -27,29 +28,20 @@ class _LoginPageState extends State<LoginPage> {
     print( res.code);
 
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Container(
-        width: 200,
-        height: 70,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Colors.green,
-        ),
-        child: Center(child: Text("Loged in successfully",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-    ));
-
-
-    if(res.code == 200){
-
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const MainLayout()));
-
-    }else if(res.code == 400){
+    if(res.code == 400){
+      customSnakeBar(context, 'Wrong email or password', Colors.redAccent);
       print('wrong password');
 
+    }else if(res.code == 200){
+      FromUserData.Name = res.data.first_name;
+      FromUserData.Email = res.data.email;
+      FromUserData.Image = res.data.image;
+
+      customSnakeBar(context, 'Loged in successfully', Colors.green);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const MainLayout()));
+
     }else{
+      customSnakeBar(context, 'Please enter your email and password', Colors.redAccent);
       print('please enter your email and password');
     }
 

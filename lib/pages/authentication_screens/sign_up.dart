@@ -4,7 +4,9 @@ import 'package:untitled3/pages/authentication_screens/sign_up.dart';
 
 import '../../api/api.dart';
 import '../../layout/main_layout.dart';
-import '../../models/user.dart';
+import '../../models/login_model.dart';
+import '../../models/user_model.dart';
+import '../../widgets/snake_bar.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -26,9 +28,10 @@ class _SignUpPageState extends State<SignUpPage> {
     print(res.code);
 
     if(res.code == 200){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const MainLayout()));
+      customSnakeBar(context, 'Signed up in successfully', Colors.green);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const MainLayout()));
 
-    }else if(res.code == 401){
+    }else if(res.code == 400){
     print('wrong password');
 
     }else{
