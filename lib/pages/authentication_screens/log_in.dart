@@ -26,7 +26,24 @@ class _LoginPageState extends State<LoginPage> {
     LoginModel res = LoginModel.fromjson(await Api.post_login_data(emailController.text, passwordController.text));
     print( res.code);
 
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Container(
+        width: 200,
+        height: 70,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.green,
+        ),
+        child: Center(child: Text("Loged in successfully",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+    ));
+
+
     if(res.code == 200){
+
       Navigator.push(context, MaterialPageRoute(builder: (context) => const MainLayout()));
 
     }else if(res.code == 400){
